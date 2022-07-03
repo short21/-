@@ -1,24 +1,41 @@
-# README
+# **はつね**
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## _サイト概要_
 
-Things you may want to cover:
+SNS の正しい使い方を学ぶことができるサイト
 
-* Ruby version
+### サイトテーマ
 
-* System dependencies
+子ども向け SNS
 
-* Configuration
+### テーマを選んだ理由
 
-* Database creation
+現在、「警視庁　ＳＮＳ等に起因する事犯の被害児童数の推移」によると青少年のスマートフォン等の所有・利用状況の増加に伴い、*児童・生徒が SNS から事件に巻き込まれるケースが年々増加傾向にある*ということが分かっています。私自身、６年間小学校教諭を経験し、児童が SNS により被害を被る事例を数々目撃しました。今後、更に SNS が発展していく中で
+*子どもたちが安全に SNS を利用することができる知識を身に付ける場を作ると同時に独自の可能性を発揮できる*ような環境が提供できればという思いからこのテーマを選択しました。
 
-* Database initialization
+### ターゲットユーザ
 
-* How to run the test suite
+小学生児童の子をもつ保護者
 
-* Services (job queues, cache servers, search engines, etc.)
+### 主な利用シーン
 
-* Deployment instructions
+基本的な機能については他の SNS と同様につぶやきを投稿することができたり、投稿にいいねを付けたりすることができます。（学習メインにならないようにするため）
+他サービスとの相違点は以下に記載します
+1.21 時以降の利用を制限する（保護者の目が行き届かなくなる可能性が考えられるため） 2.画像投稿、フォローの解除、チャット等にはトラブルを防ぐためのホップアップを充実させる 3.チャットは相互フォローされた場合にのみできるようにする
+以上の機能のほかにも児童が安心して SNS に触れながら未然にトラブルを防ぐための知識を身に付けることができるような機能を追加していきます。
+SNS が浸透し、保護者の繋がりも以前より強くなっています。その中で児童の SNS 被害についても議論し、保護者の管理の元、SNS についての知識を身に付ける環境になればと考えています。
 
-* ...
+## 設計書
+
+## 開発環境
+
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JS ライブラリ：jQuery
+- IDE：Cloud9
+
+## 使用素材
+
+- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名と URL を明記してください。
+- 使用しない場合は、使用素材の項目を README から削除してください。
