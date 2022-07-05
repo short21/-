@@ -15,11 +15,14 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 
   ########### 会員側のルーティング設定 ##########
   namespace :public do
+    resources :posts
+
   end
-  
+
 
   ########## 管理者側のルーティング設定 ##########
   namespace :admin do
+    resources :posts
 
   end
 end
