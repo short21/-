@@ -1,14 +1,4 @@
 Rails.application.routes.draw do
-
-  namespace :admin do
-    get 'users/index'
-    get 'users/show'
-    get 'users/edit'
-  end
-  namespace :public do
-    get 'users/show'
-    get 'users/edit'
-  end
   # 会員用
 # URL /customers/sign_in ...
 devise_for :users,skip: [:passwords], controllers: {
@@ -23,7 +13,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   ########### 会員側のルーティング設定 ##########
-  namespace :public do
+  scope module: :public do
     resources :users, only: [:show, :edit, :destroy, :update]
     resources :posts, only: [:new, :create, :index, :show, :destroy] do
       resources :post_comments, only: [:create]
