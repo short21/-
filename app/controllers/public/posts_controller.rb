@@ -6,11 +6,13 @@ class Public::PostsController < ApplicationController
   def index
     @post_new = Post.new
     @posts = Post.all
+    @post_comment = PostComment.new
   end
 
   def show
     @post_new = Post.new
     @post = Post.find(params[:id])
+    @post_comment = PostComment.new
   end
 
   def create
@@ -19,9 +21,15 @@ class Public::PostsController < ApplicationController
     if @post_new.save
       redirect_to post_path(@post_new), notice: "You have created book successfully."
     else
-      @books = Post.all
+      @posts = Post.all
       render 'index'
     end
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    redirect_to user_path(current_user)
   end
 
   private
