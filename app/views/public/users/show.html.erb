@@ -1,7 +1,37 @@
-<h1>マイページ</h1>
-<div>
-  <%= @user.name %>
+<div class='container'>
+  <div class='row'>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+        <h1>マイページ</h1>
+        <div class = "btn btn-info">
+          <%= link_to '投稿する', new_post_path(current_user.id), class: 'nav-link text-dark' %>
+        </div>
+        <div class='row'>
+          <%= link_to edit_user_path(current_user), class: "btn btn-outline-secondary edit_user_#{@user.id}" do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+        </div>
+        <div>
+          <%= image_tag @user.get_profile_image(100,100) %>
+          <%= @user.name %>
+        </div>
+        <p>
+          <%= @user.introduction %>
+        </p>
+        <% @posts.each do |post| %>
+        <table>
+          <tr>
+            <td>
+              <%= image_tag post.user.get_profile_image(50,50) %>
+            </td>
+            <td>
+              <%= post.body %>
+            </td>
+            <td>
+               <%= link_to "#{post.post_comments.count} コメント", post_path(post.id) %>
+          </tr>
+        </table>
+        <% end %>
+    </div>
+  </div>
 </div>
-<p>
-  <%= @user.introduction %>
-</p>
+
