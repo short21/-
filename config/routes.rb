@@ -14,6 +14,8 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 
   ########### 会員側のルーティング設定 ##########
   scope module: :public do
+    root to: "homes#top"
+    get '/home/about' => 'homes#about', as: 'about'
     resources :users, only: [:show, :edit, :destroy, :update]
     resources :posts, only: [:new, :create, :index, :show, :destroy] do
       resources :post_comments, only: [:create]

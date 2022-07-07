@@ -1,7 +1,19 @@
 <h1>マイページ</h1>
+<div class = "btn btn-info">
+  <%= link_to '投稿する', new_post_path(current_user.id), class: 'nav-link text-dark' %>
+</div>
 <div>
+  <%= image_tag @user.get_profile_image(100,100) %>
   <%= @user.name %>
 </div>
 <p>
   <%= @user.introduction %>
 </p>
+
+<% @posts.each do |post| %>
+  <tr>
+    <%= image_tag post.user.get_profile_image(50,50) %>
+    <%= post.body %>
+  </tr>
+<% end %>
+
