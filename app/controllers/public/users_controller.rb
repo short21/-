@@ -7,16 +7,23 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
-    @user =  @user = User.find(params[:id])
+    @user = User.find(params[:id])
+    if @user == current_user
+      render :edit
+    else
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def update
-    @user =  @user = User.find(params[:id])
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to user_path(current_user.id), notice: "You have updated user successfully."
+    else
+      render "users/edit"
+    end
   end
 
-  def destroy
-    @user =  @user = User.find(params[:id])
-  end
 
   private
 
