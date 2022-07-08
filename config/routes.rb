@@ -18,6 +18,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     get '/home/about' => 'homes#about', as: 'about'
     resources :users, only: [:show, :edit, :destroy, :update]
     resources :posts, only: [:new, :create, :index, :show, :destroy] do
+      resource :favorites, only: [:create, :destroy]
       resources :post_comments, only: [:create, :destroy]
     end
 
