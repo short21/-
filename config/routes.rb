@@ -25,6 +25,9 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
       resource :favorites, only: [:create, :destroy]
       resources :post_comments, only: [:create, :destroy]
     end
+    get "search" => "searches#search"
+    get 'chat/:id', to: 'chats#show', as: 'chat'
+    resources :chats, only: [:create]
 
   end
 
