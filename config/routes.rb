@@ -28,7 +28,11 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     get "search" => "searches#search"
     get 'chat/:id', to: 'chats#show', as: 'chat'
     resources :chats, only: [:create]
-
+    resources :notifications, only: [:index] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
   end
 
 
