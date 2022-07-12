@@ -5,6 +5,8 @@ class Public::FavoritesController < ApplicationController
     favorite = current_user.favorites.new(post_id: post.id)
     favorite.save
     redirect_to posts_path(post)
+    #通知の作成
+    post.create_notification_favorite!(current_user)
   end
 
   def destroy
