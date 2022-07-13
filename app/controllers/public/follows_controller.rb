@@ -1,5 +1,6 @@
 class Public::FollowsController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_access_time
   def create
     current_user.follow(params[:user_id])
     user = User.find(params[:user_id])
@@ -21,6 +22,12 @@ class Public::FollowsController < ApplicationController
   def followers
     user = User.find(params[:user_id])
     @users = user.followers
+  end
+
+  def require_access_time
+    if 23 <= Time.current.hour || Time.current.hour <= 5
+      redirect_to times_path
+    end
   end
 
 end

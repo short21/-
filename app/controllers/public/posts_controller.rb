@@ -1,4 +1,5 @@
 class Public::PostsController < ApplicationController
+  before_action :require_access_time
   def new
     @post_new = Post.new
   end
@@ -36,5 +37,11 @@ class Public::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:body,:image)
+  end
+
+  def require_access_time
+    if 23 <= Time.current.hour || Time.current.hour <= 5
+      redirect_to times_path
+    end
   end
 end

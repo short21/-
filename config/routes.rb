@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'time/index'
   # 会員用
 # URL /customers/sign_in ...
 devise_for :users,skip: [:passwords], controllers: {
@@ -33,6 +34,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
         delete 'destroy_all'
       end
     end
+    resources :times, only: [:index]
   end
 
 
