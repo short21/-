@@ -58,7 +58,7 @@ class Post < ApplicationRecord
       post_id: id,
       post_comment_id: post_comment_id,
       visited_id: visited_id,
-      action: 'comment'
+      action: 'post_comment'
     )
     # 自分の投稿に対するコメントの場合は、通知済みとする
     if notification.visiter_id == notification.visited_id
