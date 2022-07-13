@@ -1,4 +1,5 @@
 class Public::PostCommentsController < ApplicationController
+    before_action :require_access_time
 
 def create
     post = Post.find(params[:post_id])
@@ -15,10 +16,17 @@ end
     redirect_to post_path(params[:post_id])
  end
 
+
 private
 
 def post_comment_params
     params.require(:post_comment).permit(:comment)
+end
+
+def require_access_time
+    if 23 <= Time.current.hour || Time.current.hour <= 5
+      redirect_to times_path
+    end
 end
 
 end

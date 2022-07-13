@@ -1,4 +1,5 @@
 class Public::UsersController < ApplicationController
+    before_action :require_access_time
 
   def show
     @user =  @user = User.find(params[:id])
@@ -29,6 +30,12 @@ class Public::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
+  end
+
+  def require_access_time
+    if 23 <= Time.current.hour || Time.current.hour <= 5
+      redirect_to times_path
+    end
   end
 
 
