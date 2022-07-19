@@ -40,8 +40,8 @@ class Public::PostsController < ApplicationController
   end
 
   def require_access_time
-    if 23 <= Time.current.hour || Time.current.hour <= 5
-      redirect_to times_path
-    end
+    #if 23 <= Time.current.hour || Time.current.hour <= 5
+      #redirect_to times_path
+    #end
   end
 end
