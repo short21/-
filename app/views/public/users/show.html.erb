@@ -6,17 +6,43 @@
         <div class='h-200px rounded-top bg-warning'>
         </div>
         <div class='card-body py-0'>
-          <div class='d-sm-flex align-items-start text-center text-sm-start'>
+          <div class='d-sm-flex align-items-start text-sm-start border-bottom'>
             <div class='avatar avatar-xxl mt-n5 mb-3'>
               <img class='avatar-imag rounded-circle border-white border-3'>
-                <%= image_tag @user.get_profile_image(100,100) %>
+                <%= image_tag @user.get_profile_image(120,120) %>
             </div>
             <div class='ms-sm-4'>
-              <h1 class='mt-3 mb-0 ml-4 h4'>
+              <h1 class='mt-3 mb-0 ml-3 h3'>
                 <%= @user.name %>
               </h1>
             </div>
-            <div class = "d-flex mt-3 justify-content center ms-sm-auto">
+            <div class="ms-sm-auto mt-3 text-center">
+              <ul class = "list-inline mb-0 text-sm-start h8">
+                <i class="fas fa-child"></i> フォロー: <%= @user.followings.count %></li>
+                <i class="fas fa-users ml-4"></i>フォロワー: <%= @user.followers.count %></li>
+                <i class= "ml-2">
+                  <% if current_user.following?(@user) %>
+                  <div class = "btn">
+                    <%= link_to user_follows_path(@user.id), class: "btn-flat-border btn-flat-border:hover", method: :delete do %>
+                      <i class="fas fa-users-slash"></i>フォローを外す
+                    <% end %>
+                  </div>
+                  <div class = "btn">
+                    <%= link_to chat_path(@user.id), class: "btn-flat-border btn-flat-border:hover" do %>
+                      <i class="fas fa-comment"></i>チャットをはじめる
+                    <% end %>
+                  </div>
+                  <% else %>
+                  <div class = "btn">
+                    <%= link_to user_follows_path(@user.id), class: "btn-flat-border btn-flat-border:hover", method: :post do %>
+                      <i class="fas fa-user-plus"></i>フォローする
+                    <% end %>
+                  </div>
+                </i>
+                <% end %>
+              </ul>
+            </div>
+            <div class = "d-flex mt-4 justify-content-center ms-sm-auto">
               <% if @user.id == current_user.id %>
                 <%= link_to edit_user_path(current_user.id), class: 'btn btn-danger-soft me-2' do %>
                 <i class="fas fa-pen"></i>
@@ -25,57 +51,64 @@
               <% end %>
             </div>
           </div>
-          <ul class = "list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
-            <li><i class="fas fa-child "></i>フォロー: <%= @user.followings.count %></li>
-            <li><i class="fas fa-users"></i>フォロワー: <%= @user.followers.count %></li>
-            <div>
-                <% if current_user.following?(@user) %>
-                <div class = "btn">
-                  <%= link_to user_follows_path(@user.id), class: "btn-flat-border btn-flat-border:hover", method: :delete do %>
-                    <i class="fas fa-users-slash"></i>フォローを外す
-                  <% end %>
-                </div>
-                <div class = "btn">
-                  <%= link_to chat_path(@user.id), class: "btn-flat-border btn-flat-border:hover" do %>
-                    <i class="fas fa-comment"></i>チャットをはじめる
-                  <% end %>
-                </div>
-                <% else %>
-                <div class = "btn">
-                  <%= link_to user_follows_path(@user.id), class: "btn-flat-border btn-flat-border:hover", method: :post do %>
-                    <i class="fas fa-user-plus"></i>フォローする
-                  <% end %>
-                </div>
-                <% end %>
-            </div>
+          <ul class = "list-inline mb-0 sample mt-3 mt-sm-0 h5">
+            <h6 class="mt-1">
+              <%= simple_format(@user.introduction) %>
+            </h6>
           </ul>
+        </div>
+      </div>
+      <div class ="card card-body mt-3 share">
+        <div class="d-flex mb-3">
+          <div class="avatar avatar-xs me-2">
+            <img class='avatar avatar-xs me-2'>
+              <%= image_tag current_user.get_profile_image(50,50) %>
+          </div>
+          <div class="balloon1-left mb-5 mt-0">
+            <%= link_to 'たのしかったできごとやがんばって作ったものを友だちにつたえよう．．．！', new_post_path(current_user.id), class: 'nav-link text-dark' %>
           </div>
         </div>
       </div>
-       <div class ="card card-body mt-3">
-        <div class="d-flex mb-3">
-         <%= link_to 'つぶやく', new_post_path(current_user.id), class: 'nav-link text-dark' %>
-        </div>
-      </div>
-      <div class ="card card-body mt-3">
-        <div class="d-flex mb-3">
-        <% @posts.each do |post| %>
-          <tr>
-            <td>
-              <%= image_tag post.user.get_profile_image(50,50) %>
+      <% @posts.each do |post| %>
+      <article class="card mt-3">
+        <div class="card-header border-0 pb-0">
+          <div class="d-flex align-items-center justify-content-between">
+             <div class="d-flex align-items-center">
+               <div class="avatar avatar-story me-2">
+                 <%= image_tag post.user.get_profile_image(50,50) %>
+                </div>
+                <div class="nav nav-divider">
+                  <h6 class="nav-item card-title mb-0">
+                    <%= @user.name %>
+                  </h6>
+                  <span class="nav-item small">・<%= Time.current.hour %>時間前</span>
+                </div>
+              </div>
+          </div>
+        <div>
+        <div class="card-body">
+          <p>
+            <%= post.body %>
+          </p>
             </td>
             <td>
-              <%= post.body %>
             </td>
-            <td>
-              <%= link_to "#{post.post_comments.count} コメント", post_path(post.id) %>
-            </td>
+            <ul class="nav nav-stack py-3 small">
+              <li class="nav-item h6 text-dark">
+                <i class="far fa-thumbs-up"></i>
+                <%= post.favorites.count %> いいね
+              </li>
+              <li class="nav-item h6 ml-3 text-dark">
+                <i class="far fa-comment-dots"></i></i>
+                <%= link_to "#{post.post_comments.count} コメント", post_path(post.id), class: "text-dark" %>
+              </li>
+            </ul>
           </tr>
-        <% end %>
+      </article>
+      <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
             <%# end %>
-          <%#= @user.introduction %>

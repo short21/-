@@ -1,40 +1,85 @@
+<%= stylesheet_link_tag "post", :media => "all" %>
 <div class='container'>
   <div class='row'>
-    <div class='col-md-3'>
-    <div class='col-md-8 offset-md-1'>
-  		<h2>投稿詳細</h2>
-  		<table class='table'>
-  		  <tr>
-          <td><%= link_to(@post.user) do %>
-            <%= image_tag @post.user.get_profile_image(100,100) %><br>
-            <%= @post.user.name %>
+    <div class="col-lg-8 mx-auto">
+      <div class="card card-body">
+        <img class="card-img rounded">
+        <div class="d-flex align-items-center justify-content-between my-3">
+          <div class="d-flex align-items-center">
+            <div class="avatar avatar-story me-2">
+              <img class="avatar-img rounded-circle">
+                <%= image_tag @post.user.get_profile_image(50,50) %>
+            </div>
+            <div>
+              <div class="nav nav-divider">
+                <h6 class="nav-item card-title mb-0"><%= @post.user.name %></h6>
+                <span class="nav-item small"> ・2h</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <%= @post.body %>
+        </div>
+        <ul class="nav nav-stack py-3 small">
+        <% if @post.favorited_by?(current_user) %>
+          <li class="nav-item h6">
+            <i class="far fa-thumbs-up"></i>
+            <%= link_to post_favorites_path(@post), method: :delete do %>
+              <%= @post.favorites.count %> いいね
+           <% end %>
+          </li>
+        <% else %>
+          <li class="nav-item h6">
+            <i class="far fa-thumbs-up"></i>
+            <%= link_to post_favorites_path(@post), class: "text-dark", method: :post do %>
+              <%= @post.favorites.count %> いいね
             <% end %>
-          </td>
-          <td><%= @post.body %></td>
-             <% if@post.user == current_user %>
-             <td><%= link_to 'Destroy', @post, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@post.id}"%></td>
+          </li>
+        <% end %>
+          <li class="nav-item h6 ml-3">
+            <i class="far fa-comment-dots"></i>
+            <%= link_to "#{@post.post_comments.count} コメント", post_path(@post.id), class: "text-dark" %>
+          </li>
+          <li class="nav-item h6 ml-3">
+            <i class="fas fa-trash-alt"></i>
+            <% if@post.user == current_user %>
+              <%= link_to '消す', @post, method: :delete, data: { confirm: '本当に消しますか？' }, class: "text-dark destroy_book_#{@post.id}"%>
             <% end %>
-          </td>
-        </tr>
-      </table>
-      <div>
-          <p>コメント件数：<%= @post.post_comments.count %></p>
-          <% @post.post_comments.each do |post_comment| %>
-            <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
-            <%= post_comment.user.name %>
-            <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
-            <% if post_comment.user == current_user %>
-              <%= link_to "削除", post_post_comment_path(post_comment.post, post_comment), method: :delete %>
-            <% end %>
-          <% end %>
-      </div>
-      <div>
+          </li>
+        </ul>
+        <ul>
           <%= form_with model: [@post, @post_comment] do |f| %>
-            <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-            <%= f.submit "送信する" %>
+            <%= f.text_area :comment,:size=>"80x5",rows: '5', placeholder: "友だちのつぶやきにコメントしてみよう！" %>
+            <%= f.submit "コメントする" %>
           <% end %>
+        </ul>
+        <% @post.post_comments.each do |post_comment| %>
+        <ul class="comment-wrap list-unstyled">
+          <div class="d-flex position-relative">
+            <div class="avatar avatar-xs">
+              <%= image_tag post_comment.user.get_profile_image(50,50) %>
+            </div>
+            <div class="ms-2">
+              <div class="bg-light rounded-start-top-0 p-3 rounded ml-3">
+                <div class="d-flex justify-content-between">
+                  <h6 class="mb-1">
+                    <%= post_comment.user.name %>
+                    <% if post_comment.user == current_user %>
+                      <%= link_to post_post_comment_path(post_comment.post, post_comment), class: "ml-3 text-dark", method: :delete do %>
+                       <i class="fas fa-trash-alt"></i>
+                      <% end %>
+                    <% end %>
+                  </h6>
+                  <small class="ms-2"><%= post_comment.created_at.strftime('%Y/%m/%d/%H:%M') %></small>
+                </div>
+                <p class="small mb-0"><%= post_comment.comment %></p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <% end %>
       </div>
-
     </div>
   </div>
 </div>

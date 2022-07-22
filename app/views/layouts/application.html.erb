@@ -1,91 +1,104 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>はつね（子供向け）</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body class="d-flex flex-column vh-100">
-    <header class="shadow-none">
-      <nav class="navbar navbar-expand-lg navbar-light">
+    <head>
+      <title>はつね（子供向け）</title>
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <%= stylesheet_link_tag "application", :media => "all" %>
+      <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    </head>
+    <body class="d-flex flex-column vh-100">
+      <header class="shadow-none">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <a class= "navbar-brand p-3">はつね</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <% if user_signed_in? %>
+              <div class="search_form">
+                <%= form_with url: search_path, local: true, method: :get do |f| %>
+                <%= f.text_field :word %>
+                <%= f.select :range, options_for_select([['ユーザー'], ['投稿']]) %>
+                <%= f.select :search, options_for_select([["部分一致","partial_match"],["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backword_match"]]) %>
+                <%= f.submit "検索", class: "btn btn-primary" %>
+                <% end %>
+              </div>
+              <% end %>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto h5">
+                  <% if user_signed_in? %>
+                  <li class="nav-item">
+                    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-dark' do %>
+                    <i class="fas fa-sign-out-alt"></i>ログアウト
+                    <% end %>
+                  </li>
+                  <li class="nav-item h5">
+                    <%= link_to posts_path, class: 'nav-link text-dark' do %>
+                    <i class="fas fa-dove"></i></i>つぶやき
+                    <% end %>
+                  </li>
+                  <li class="nav-itemh5">
+                    <%= link_to user_path(current_user.id), class: 'nav-link text-dark' do %>
+                    <i class="fas fa-user-circle"></i>マイページ
+                    <% end %>
+                  </li>
+                  <% if unchecked_notifications.any? %>
+                   <i class="fa fa-circle" style="color: gold;"></i>
+                  <% end %>
+                  <li class="nav-item h5">
+                    <%= link_to notifications_path, class: 'nav-link text-dark' do%>
+                    <i class="fas fa-bell"></i>通知
+                    <% end %>
+                  </li>
+                  <% else %>
+                  <li class="nav-item h5">
+                    <%= link_to new_user_registration_path, class: 'nav-link text-dark' do %>
+                    <i class="fas fa-user-plus"></i>とうろく
+                    <% end %>
+                  </li>
+                  <li class="nav-item h5">
+                    <%= link_to new_user_session_path, class: 'nav-link text-dark' do %>
+                    <i class="fas fa-sign-in-alt"></i>ログイン
+                    <% end %>
+                  </li>
+                  <li class="nav-item h5">
+                    <%= link_to about_path, class: 'nav-link text-dark' do %>
+                    <i class="fas fa-egg"></i>はつねについて
+                    <% end %>
+                  </li>
+                  <% end %>
+                </ul>
+              </div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <%= yield %>
+      </main>
+      <footer class="text-black-50 pb-4">
         <div class="container">
-        <a class= "navbar-brand p-3">はつね</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <% if user_signed_in? %>
-          <div class="search_form">
-            <%= form_with url: search_path, local: true, method: :get do |f| %>
-            <%= f.text_field :word %>
-            <%= f.select :range, options_for_select([['ユーザー'], ['投稿']]) %>
-            <%= f.select :search, options_for_select([["部分一致","partial_match"],["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backword_match"]]) %>
-            <%= f.submit "検索", class: "btn btn-primary" %>
-            <% end %>
-          </div>
-          <% end %>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-            <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to '投稿一覧', posts_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'マイページ', user_path(current_user.id), class: 'nav-link text-dark' %>
-            </li>
-            <% if unchecked_notifications.any? %>
-             <i class="fa fa-circle" style="color: gold;"></i>
-            <% end %>
-            <li class="nav-item">
-              <%= link_to "お知らせ", notifications_path, class: 'nav-link text-dark' %>
-            </li>
-            <% else %>
-            <li class="nav-item">
-              <%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "はつねについて", about_path, class: 'nav-link text-dark' %>
-            </li>
-            <% end %>
-            </ul>
+          <div class="row">
+            <div class="col-md-4">
+              <p>Hatune</p>
+            </div>
+            <div class="col-md-8">
+              <h6 class="text-black-50 mt-2 mb-3">リンク</h6>
+              <ul class="p-0 list-unstyled">
+                <li>
+                  <a href="" title="About" class="text-black-50">概要</a>
+                </li>
+                <li>
+                  <a href="" title="License informations" class="text-black-50">プライバシーポリシー</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </nav>
+      </footer>
     </header>
-
-    <main class="mb-auto">
-      <%= yield %>
-    </main>
-    <footer class="text-black pt-5 pb-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <p>Hatune</p>
-          </div>
-          <div class="col-md-8">
-            <h6 class="text-black mt-2 mb-3">リンク</h6>
-            <ul class="p-0 list-unstyled">
-              <li>
-                <a href="" title="About" class="text-black-50">概要</a>
-              </li>
-              <li>
-                <a href="" title="License informations" class="text-black-50">プライバシーポリシー</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
   </body>
 </html>
