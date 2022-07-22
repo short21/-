@@ -17,7 +17,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   scope module: :public do
     root to: "homes#top"
     get '/home/about' => 'homes#about', as: 'about'
-    resources :users, only: [:show, :edit, :destroy, :update] do
+    resources :users, only: [:show, :edit, :destroy, :update, :create] do
       resource :follows, only: [:create, :destroy]
       get 'followings' => 'follows#followings', as: 'followings'
       get 'followers' => 'follows#followers', as: 'followers'
