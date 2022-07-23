@@ -12,10 +12,11 @@
     "jquery-ui": "^1.13.1",
     "popper": "^1.0.1",
     "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "yarn": "^1.22.19"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^3"
+    "webpack-dev-server": "^3.11.0"
   }
 }
