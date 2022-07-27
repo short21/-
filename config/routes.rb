@@ -6,6 +6,10 @@ devise_for :users,skip: [:passwords], controllers: {
   registrations: "public/registrations",
   sessions: 'public/sessions'
 }
+devise_scope :user do
+  post 'users_guest_sign_in', to: 'public/sessions#guest_sign_in'
+end
+
 # 管理者用
 # URL /admin/sign_in ...
 devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
@@ -22,6 +26,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
       get 'followings' => 'follows#followings', as: 'followings'
       get 'followers' => 'follows#followers', as: 'followers'
     end
+
     resources :posts, only: [:new, :create, :index, :show, :destroy] do
       resource :favorites, only: [:create, :destroy]
       resources :post_comments, only: [:create, :destroy]
@@ -36,7 +41,6 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     end
     resources :times, only: [:index]
   end
-
 
   ########## 管理者側のルーティング設定 ##########
   namespace :admin do

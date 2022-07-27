@@ -1,40 +1,72 @@
+<h2 class="text-center mt-5 mb-5"><%= @user.name %>さんとのチャット</h2>
+<%= stylesheet_link_tag "chat", :media => "all" %>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-6">
-            <h2><%= @user.name %>さんとのチャット</h2>
-
-            <table class="message table">
-              <thead>
-                <tr>
-                  <th style="text-align: left; font-size: 20px;"><%= current_user.name %></th>
-                  <th style="text-align: right; font-size: 20px;"><%= @user.name %></th>
-                </tr>
-              </thead>
-              <% @chats.each do |chat| %>
-                <% if chat.user_id == current_user.id %>
-                <tbody>
-                  <tr>
-                    <th>
-                      <p style="text-align: left;"><%= chat.message %></p>
-                    </th>
-                    <th></th>
-                  </tr>
-                <% else %>
-                  <tr>
-                    <th></th>
-                    <th>
-                      <p style="text-align: right;"><%= chat.message %></p>
-                    </th>
-                  </tr>
-                </tbody>
-                <% end %>
-              <% end %>
-            </table>
-            <%= form_with model: @chat, remote: true do |f| %>
-              <%= f.text_field :message %>
-              <%= f.hidden_field :room_id %>
-              <%= f.submit "SEND", class:"btn btn-sm btn-success chat-btn" %>
-            <% end %>
+  <div class="row clearfix">
+    <div class="col-lg-12">
+        <div class="card chat-app">
+            <div id="plist" class="people-list">
+                <ul class="list-unstyled chat-list mt-2 mb-0">
+                  <% @chats.each do |chat| %>
+                    <%= link_to chat_path(chat.user.id), class: 'text-dark' do %>
+                      <li class="clearfix">
+                          <img>
+                            <%= image_tag chat.user.get_profile_image(50,50) %>
+                          <div class="about">
+                              <div class="name mt-2 ml-2"><%= chat.user.name %></div>
+                          </div>
+                      </li>
+                    <% end %>
+                  <% end %>
+                </ul>
+            </div>
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img>
+                              <%= image_tag @user.get_profile_image(50,50) %>
+                            <div class="chat-about">
+                                <h5 class="m-b-0 mt-2 ml-2"><%= @user.name %></h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 hidden-sm text-right">
+                           <%= link_to user_path(@user.id), class: 'class="btn btn-outline-secondary h2' do %>
+                           <i class="fas fa-meh"></i>
+                           <% end %>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-history">
+                    <ul class="m-b-0">
+                        <% @chats.each do |chat| %>
+                          <% if chat.user_id == current_user.id %>
+                          <li class="clearfix">
+                              <div class="message-data text-right">
+                                  <span class="message-data-time"><%= chat.created_at.strftime('%Y/%m/%d/%H:%M') %></span>
+                                  <img>
+                                  <%= image_tag @user.get_profile_image(50,50) %>
+                              </div>
+                              <div class="message other-message float-right"><%= chat.message %></div>
+                          </li>
+                          <% else %>
+                          <li class="clearfix">
+                              <div class="message-data">
+                                  <span class="message-data-time"><%= chat.created_at.strftime('%Y/%m/%d/%H:%M') %></span>
+                              </div>
+                              <div class="message my-message"><%= chat.message %></div>
+                          </li>
+                          <% end %>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="chat-message clearfix">
+                  <%= form_with model: @chat, remote: true do |f| %>
+                    <%= f.text_field :message,size: "85"%>
+                    <%= f.hidden_field :room_id %>
+                    <%= f.submit "おくる", class:"btn btn-sm btn-success chat-btn" %>
+                  <% end %>
+                </div>
+            </div>
         </div>
     </div>
 </div>

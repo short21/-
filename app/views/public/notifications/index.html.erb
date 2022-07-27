@@ -1,13 +1,18 @@
-<h3 class="text-center">通知</h3>
-    <%= link_to destroy_all_notifications_path, method: :delete do %>
+<div class='container'>
+  <div class='row'>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h3 class="text-center">つうち</h3>
+      <%= link_to destroy_all_notifications_path, method: :delete do %>
         <i class="fas fa-trash" style="color: black;"></i>
-        <h7 style="color: black;">全削除</h7>
-    <% end %>
-    <hr>
-<% if @notifications.exists? %>
-    <div class="users-index">
-        <%= render @notifications %>
+        <h7 style="color: black;">すべて消す</h7>
+        <% end %>
+      <% if @notifications.exists? %>
+        <div class="users-index mt-3">
+            <%= render @notifications %>
+        </div>
+      <% else %>
+        <p class="text-center mt-5">つうちはありません</p>
+      <% end %>
     </div>
-<% else %>
-    <p>通知はありません</p>
-<% end %>
+  </div>
+</div>

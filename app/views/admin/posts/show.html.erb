@@ -1,2 +1,62 @@
-<h1>Admin::Posts#show</h1>
-<p>Find me in app/views/admin/posts/show.html.erb</p>
+<%= stylesheet_link_tag "post", :media => "all" %>
+<div class='container'>
+  <div class='row'>
+    <div class="col-lg-8 mx-auto">
+      <div class="card card-body">
+        <img class="card-img rounded">
+        <div class="d-flex align-items-center justify-content-between my-3">
+          <div class="d-flex align-items-center">
+            <div class="avatar avatar-story me-2">
+              <img class="avatar-img rounded-circle">
+                <%= image_tag @post.user.get_profile_image(70,70) %>
+            </div>
+            <div>
+              <div class="nav nav-divider">
+                <h6 class="nav-item card-title mb-0"><%= @post.user.name %></h6>
+                <span class="nav-item small"> ・<%= @post.created_at.strftime('%Y/%m/%d/%H:%M') %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <% if @post.image.present? %>
+          <%= image_tag @post.image, size: "400x400" %>
+          <% else %>
+          <% end %>
+        </div>
+        <div class="h5 mt-3 mb-3">
+          <%= @post.body %>
+        </div>
+        <ul class="nav nav-stack py-3 small">
+          <li class="nav-item h6 ml-3">
+            <i class="fas fa-trash-alt"></i>
+              <%= link_to '消す', @post, method: :delete, data: { confirm: '本当に消しますか？' }, class: "text-dark destroy_book_#{@post.id}"%>
+          </li>
+        </ul>
+        <% @post.post_comments.each do |post_comment| %>
+        <ul class="comment-wrap list-unstyled">
+          <div class="d-flex position-relative">
+            <div class="avatar avatar-xs">
+              <%= image_tag post_comment.user.get_profile_image(50,50) %>
+            </div>
+            <div class="ms-2">
+              <div class="bg-light rounded-start-top-0 p-3 rounded ml-3">
+                <div class="d-flex justify-content-between">
+                  <h6 class="mb-1">
+                    <%= post_comment.user.name %>
+                    <%= link_to post_post_comment_path(post_comment.post, post_comment), class: "ml-3 text-dark", method: :delete do %>
+                       <i class="fas fa-trash-alt"></i>
+                    <% end %>
+                  </h6>
+                  <small class="ms-2"><%= post_comment.created_at.strftime('%Y/%m/%d/%H:%M') %></small>
+                </div>
+                <p class="small mb-0"><%= post_comment.comment %></p>
+              </div>
+            </div>
+          </div>
+        </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

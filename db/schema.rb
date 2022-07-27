@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 2022_07_12_053855) do
     t.integer "user_id"
     t.integer "room_id"
     t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -82,16 +84,16 @@ ActiveRecord::Schema.define(version: 2022_07_12_053855) do
   end
 
   create_table "post_comments", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "post_id", null: false
+    t.integer "user_id"
+    t.integer "post_id"
     t.string "comment", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "body", default: "", null: false
+    t.integer "user_id"
+    t.string "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

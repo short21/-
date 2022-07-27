@@ -1,5 +1,5 @@
 class Public::PostCommentsController < ApplicationController
-    before_action :require_access_time
+    #before_action :require_access_time
 
 def create
     post = Post.find(params[:post_id])

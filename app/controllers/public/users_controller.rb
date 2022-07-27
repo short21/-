@@ -32,10 +32,17 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.name == "guestuser"
+      redirect_to user_path(current_user) , notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    end
+  end
+
   def require_access_time
-    #if 23 <= Time.current.hour || Time.current.hour <= 5
-      #redirect_to times_path
-    #end
+    if 23 <= Time.current.hour || Time.current.hour <= 5
+      redirect_to times_path
+    end
   end
 
 

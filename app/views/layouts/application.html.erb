@@ -9,11 +9,11 @@
       <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
       <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     </head>
-    <body class="d-flex flex-column vh-100">
-      <header class="shadow-none">
+    <body class="d-flex flex-column vh-100 bg-light">
+      <header class="shadow-none bg-white">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="container">
-            <a class= "navbar-brand p-3">はつね</a>
+            <a class= "navbar-brand p-3"><%= link_to image_tag("logo.png"),root_path, class: 'icon' %></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,7 @@
                 <%= form_with url: search_path, local: true, method: :get do |f| %>
                 <%= f.text_field :word %>
                 <%= f.select :range, options_for_select([['ユーザー'], ['投稿']]) %>
-                <%= f.select :search, options_for_select([["部分一致","partial_match"],["完全一致","perfect_match"], ["前方一致","forward_match"],  ["後方一致","backword_match"]]) %>
+                <%= f.select :search, options_for_select([["ぶぶん","partial_match"],["すべて","perfect_match"]]) %>
                 <%= f.submit "検索", class: "btn btn-primary" %>
                 <% end %>
               </div>
@@ -31,45 +31,66 @@
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto h5">
                   <% if user_signed_in? %>
-                  <li class="nav-item">
-                    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-dark' do %>
-                    <i class="fas fa-sign-out-alt"></i>ログアウト
+                    <li class="nav-item">
+                      <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-sign-out-alt"></i>ログアウト
+                      <% end %>
+                    </li>
+                    <li class="nav-item h5">
+                      <%= link_to posts_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-dove"></i></i>つぶやき
+                      <% end %>
+                    </li>
+                    <li class="nav-itemh5">
+                      <%= link_to user_path(current_user.id), class: 'nav-link text-dark' do %>
+                      <i class="fas fa-user-circle"></i>マイページ
+                      <% end %>
+                    </li>
+                    <% if unchecked_notifications.any? %>
+                     <i class="fa fa-circle" style="color: gold;"></i>
                     <% end %>
-                  </li>
-                  <li class="nav-item h5">
-                    <%= link_to posts_path, class: 'nav-link text-dark' do %>
-                    <i class="fas fa-dove"></i></i>つぶやき
-                    <% end %>
-                  </li>
-                  <li class="nav-itemh5">
-                    <%= link_to user_path(current_user.id), class: 'nav-link text-dark' do %>
-                    <i class="fas fa-user-circle"></i>マイページ
-                    <% end %>
-                  </li>
-                  <% if unchecked_notifications.any? %>
-                   <i class="fa fa-circle" style="color: gold;"></i>
-                  <% end %>
-                  <li class="nav-item h5">
-                    <%= link_to notifications_path, class: 'nav-link text-dark' do%>
-                    <i class="fas fa-bell"></i>通知
-                    <% end %>
-                  </li>
+                    <li class="nav-item h5">
+                      <%= link_to notifications_path, class: 'nav-link text-dark' do%>
+                      <i class="fas fa-bell"></i>つうち
+                      <% end %>
+                    </li>
+                  <% elsif admin_signed_in? %>
+                    <li class="nav-item">
+                      <%= link_to destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-sign-out-alt"></i>ログアウト
+                      <% end %>
+                    </li>
+                    <li class="nav-item h5">
+                      <%= link_to admin_posts_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-dove"></i></i>つぶやき
+                      <% end %>
+                    </li>
+                     <li class="nav-item h5">
+                      <%= link_to admin_users_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-dove"></i></i>ユーザー
+                      <% end %>
+                    </li>
+                    <li class="nav-item h5">
+                      <%= link_to about_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-egg"></i>はつねについて
+                      <% end %>
+                    </li>
                   <% else %>
-                  <li class="nav-item h5">
-                    <%= link_to new_user_registration_path, class: 'nav-link text-dark' do %>
-                    <i class="fas fa-user-plus"></i>とうろく
-                    <% end %>
-                  </li>
-                  <li class="nav-item h5">
-                    <%= link_to new_user_session_path, class: 'nav-link text-dark' do %>
-                    <i class="fas fa-sign-in-alt"></i>ログイン
-                    <% end %>
-                  </li>
-                  <li class="nav-item h5">
-                    <%= link_to about_path, class: 'nav-link text-dark' do %>
-                    <i class="fas fa-egg"></i>はつねについて
-                    <% end %>
-                  </li>
+                    <li class="nav-item h5">
+                      <%= link_to new_user_registration_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-user-plus"></i>とうろく
+                      <% end %>
+                    </li>
+                    <li class="nav-item h5">
+                      <%= link_to new_user_session_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-sign-in-alt"></i>ログイン
+                      <% end %>
+                    </li>
+                    <li class="nav-item h5">
+                      <%= link_to about_path, class: 'nav-link text-dark' do %>
+                      <i class="fas fa-egg"></i>はつねについて
+                      <% end %>
+                    </li>
                   <% end %>
                 </ul>
               </div>
@@ -83,13 +104,13 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4">
-              <p>Hatune</p>
+              <p>© Hatune, Inc</p>
             </div>
             <div class="col-md-8">
-              <h6 class="text-black-50 mt-2 mb-3">リンク</h6>
-              <ul class="p-0 list-unstyled">
+              <h6 class="text-black-50 mt-2 mb-3 ml-4">リンク</h6>
+              <ul class="p-0 list-unstyled text-left">
                 <li>
-                  <a href="" title="About" class="text-black-50">概要</a>
+                  <%= link_to "管理者はこちら", admin_session_path, class: 'text-black-50'  %>
                 </li>
                 <li>
                   <a href="" title="License informations" class="text-black-50">プライバシーポリシー</a>
