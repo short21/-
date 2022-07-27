@@ -8,17 +8,23 @@
           <div class="d-flex align-items-center">
             <div class="avatar avatar-story me-2">
               <img class="avatar-img rounded-circle">
-                <%= image_tag @post.user.get_profile_image(50,50) %>
+                <%= image_tag @post.user.get_profile_image(70,70) %>
             </div>
             <div>
               <div class="nav nav-divider">
                 <h6 class="nav-item card-title mb-0"><%= @post.user.name %></h6>
-                <span class="nav-item small"> ・2h</span>
+                <span class="nav-item small"> ・<%= @post.created_at.strftime('%Y/%m/%d/%H:%M') %></span>
               </div>
             </div>
           </div>
         </div>
-        <div>
+        <div class="text-center">
+          <% if @post.image.present? %>
+          <%= image_tag @post.image, size: "400x400" %>
+          <% else %>
+          <% end %>
+        </div>
+        <div class="h5 mt-3 mb-3">
           <%= @post.body %>
         </div>
         <ul class="nav nav-stack py-3 small">
@@ -43,15 +49,24 @@
           </li>
           <li class="nav-item h6 ml-3">
             <i class="fas fa-trash-alt"></i>
-            <% if@post.user == current_user %>
               <%= link_to '消す', @post, method: :delete, data: { confirm: '本当に消しますか？' }, class: "text-dark destroy_book_#{@post.id}"%>
-            <% end %>
           </li>
         </ul>
-        <ul>
+        <ul class="text-center">
           <%= form_with model: [@post, @post_comment] do |f| %>
             <%= f.text_area :comment,:size=>"80x5",rows: '5', placeholder: "友だちのつぶやきにコメントしてみよう！" %>
-            <%= f.submit "コメントする" %>
+            <ul class="mt-5 h4" style="list-style: none;"><h5 class="mb-3">コメントチェック</h5>
+            <li>
+              <%= check_box_tag :post %><%= label_tag :post, "あい手をきずつける言ばをつかっていない" ,class: " h5 ml-3" %>
+            </li>
+            <li>
+              <%= check_box_tag :post %><%= label_tag :post, "あい手が元気の出る言ばをつかえている" ,class: " h5 ml-3" %>
+            </li>
+            <li>
+              <%= check_box_tag :post %><%= label_tag :post, "お家や名前が分かることは書いていない" ,class: " h5 ml-3" %>
+            </li>
+　        </ul>
+            <%= f.submit "コメントする",class: "btn btn-info" %>
           <% end %>
         </ul>
         <% @post.post_comments.each do |post_comment| %>

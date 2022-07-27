@@ -11,12 +11,12 @@
         <%= f.label :トップ画像 %>
         <%= f.file_field :profile_image, class: "form-control-file user_image", accept: 'image/*' %>
       </div>
-      <div class="form-group">
+      <div class="form-group" rows="4" cols="40">
         <%= f.label :自己紹介 %>
-        <%= f.text_area :introduction, class: "form-control introduction" %>
+        <%= f.text_area :introduction , size: "40x15",class: "form-control introduction" %>
       </div>
       <div class="form-group">
-        <%= f.submit class: 'btn btn-secondary' %>
+        <%= f.submit 'へんしゅう ', class: 'btn btn-secondary' %>
       </div>
     <% end %>
   </div>

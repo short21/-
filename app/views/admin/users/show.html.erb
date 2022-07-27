@@ -1,2 +1,80 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<%= stylesheet_link_tag "user", :media => "all" %>
+<div class='container'>
+  <div class='row'>
+    <div class='vstack gap-4'>
+      <div class='card'>
+        <div class='h-200px rounded-top bg-warning'>
+        </div>
+        <div class='card-body py-0'>
+          <div class='d-sm-flex align-items-start text-sm-start border-bottom'>
+            <div class='avatar avatar-xxl mt-n5 mb-3'>
+              <img class='avatar-imag rounded-circle border-white border-3'>
+                <%= image_tag @user.get_profile_image(120,120) %>
+            </div>
+            <div class='ms-sm-4'>
+              <h1 class='mt-3 mb-0 ml-3 h3'>
+                <%= @user.name %>
+              </h1>
+            </div>
+            <div class="ms-sm-auto mt-3 text-center">
+              <ul class = "list-inline mb-0 text-sm-start h8">
+                <i class="fas fa-child"></i> <%= link_to "フォロー", user_followings_path(@user),class: "text-dark" %>: <%= @user.followings.count %></li>
+                <i class="fas fa-users ml-4"></i><%= link_to "フォロワー", user_followers_path(@user),class: "text-dark" %>: <%= @user.followers.count %></li>
+                <i class= "ml-2"></i>
+              </ul>
+            </div>
+            <div class = "d-flex mt-4 justify-content-center ms-sm-auto">
+                <%= link_to edit_admin_user_path(@user), class: 'btn btn-danger-soft me-2' do %>
+                <i class="fas fa-pen"></i>
+                <span></span>
+                <% end %>
+            </div>
+          </div>
+          <ul class = "list-inline mb-0 sample mt-3 mt-sm-0 h5">
+            <h6 class="mt-1">
+              <%= simple_format(@user.introduction) %>
+            </h6>
+          </ul>
+        </div>
+      </div>
+      <% @posts.each do |post| %>
+      <article class="card mt-3">
+        <div class="card-header border-0 pb-0">
+          <div class="d-flex align-items-center justify-content-between">
+             <div class="d-flex align-items-center">
+               <div class="avatar avatar-story me-2">
+                 <%= image_tag post.user.get_profile_image(50,50) %>
+                </div>
+                <div class="nav nav-divider">
+                  <h6 class="nav-item card-title mb-0">
+                    <%= @user.name %>
+                  </h6>
+                  <span class="nav-item small">・<%= post.created_at.strftime('%Y/%m/%d/%H:%M') %></span>
+                </div>
+              </div>
+          </div>
+        <div>
+        <div class="card-body">
+          <p class="h5 mt-2">
+            <%= post.body %>
+          </p>
+          <p class="text-center mt-3 mb-3">
+            <% if post.image.present? %>
+            <%= image_tag post.image, size: "300x300" %>
+            <% else %>
+            <% end %>
+          </p>
+            <ul class="nav nav-stack py-3 small">
+              <li class="nav-item h6 ml-3 text-dark">
+                <i class="far fa-comment-dots"></i></i>
+                <%= link_to "#{post.post_comments.count} コメント", admin_post_path(post.id), class: "text-dark" %>
+              </li>
+            </ul>
+          </tr>
+      </article>
+      <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

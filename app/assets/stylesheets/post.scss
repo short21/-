@@ -136,3 +136,18 @@
   margin: 0;
   padding: 0;
 }
+
+.card-body{
+  padding:10px;
+}
+
+.sidebar_fixed {
+  position: sticky;
+  top: 0px;
+}
+.sidebar_content {
+  margin-bottom: 100px;
+}
+.sidebar-hidden{
+ height: 1000px;
+}

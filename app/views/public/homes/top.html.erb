@@ -1,4 +1,12 @@
-<h1>はつね</h1>
-<p>
-  会員登録は<%= link_to "こちら", new_user_registration_path %>
-</p>
+<div class='container text-center'>
+  <div class='row'>
+     <div class= "p-3 mt-3"><%= link_to image_tag("logo-bar.png"),about_path, class: 'bar' %></div>
+  </div>
+  <h1 class="mt-5">SNSの正しい使い方を学べる子ども向けSNS</h1>
+  <p class="mt-5 h3">
+    会員登録は<%= link_to "こちら", new_user_registration_path ,class: "text-dark" %>
+  </p>
+  <div class="row">
+    <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
+  </div>
+</div>
