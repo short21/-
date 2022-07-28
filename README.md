@@ -38,8 +38,8 @@
 
 ## 使用素材
 - 名称:ふくろう
-- 制作者:588ku
-- 配布サイト:https://ja.pngtree.com/freepng/
+  制作者:588ku
+  配布サイト:https://ja.pngtree.com/freepng/
 
 - 名称: エイリアン,ブロビー氏,
-- 配付サイト:https://icons8.jp/
+  配付サイト:https://icons8.jp/
