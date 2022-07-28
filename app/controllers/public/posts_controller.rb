@@ -5,6 +5,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
+    @page = Post.all.page(params[:page]).per(10)
     @post_new = Post.new
     @posts = Post.all
     @post_comment = PostComment.new
@@ -36,11 +37,11 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:body,:image)
+    params.require(:post).permit(:body,:image,:string)
   end
 
   def require_access_time
-    if 23 <= Time.current.hour || Time.current.hour <= 5
+    if 21 <= Time.current.hour || Time.current.hour <= 5
       redirect_to times_path
     end
   end

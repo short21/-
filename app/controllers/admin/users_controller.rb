@@ -1,11 +1,12 @@
 class Admin::UsersController < ApplicationController
-  before_action :ensure_guest_user, only: [:edit]
 
   def index
+    @page = Post.all.page(params[:page]).per(10)
     @users = User.all
   end
 
   def show
+    @page = Post.all.page(params[:page]).per(10)
     @user = User.find(params[:id])
     @posts = @user.posts
     @post_new = Post.new
@@ -19,7 +20,7 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to user_path(user.id), notice: "You have updated user successfully."
+      redirect_to admin_user_path(@user.id), notice: "You have updated user successfully."
     else
       render "users/edit"
     end

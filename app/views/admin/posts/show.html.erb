@@ -30,7 +30,7 @@
         <ul class="nav nav-stack py-3 small">
           <li class="nav-item h6 ml-3">
             <i class="fas fa-trash-alt"></i>
-              <%= link_to '消す', @post, method: :delete, data: { confirm: '本当に消しますか？' }, class: "text-dark destroy_book_#{@post.id}"%>
+              <%= link_to '消す',admin_post_path(@post.id), method: :delete, data: { confirm: '本当に消しますか？' }, class: "text-dark destroy_book_#{@post.id}"%>
           </li>
         </ul>
         <% @post.post_comments.each do |post_comment| %>
@@ -44,7 +44,7 @@
                 <div class="d-flex justify-content-between">
                   <h6 class="mb-1">
                     <%= post_comment.user.name %>
-                    <%= link_to post_post_comment_path(post_comment.post, post_comment), class: "ml-3 text-dark", method: :delete do %>
+                    <%= link_to admin_post_post_comment_path(post_comment.post, post_comment), class: "ml-3 text-dark", method: :delete do %>
                        <i class="fas fa-trash-alt"></i>
                     <% end %>
                   </h6>

@@ -1,7 +1,9 @@
 class Public::UsersController < ApplicationController
-    before_action :require_access_time
+  #時間制限の設定
+  before_action :require_access_time
 
   def show
+    @page = Post.all.page(params[:page]).per(10)
     @user =  @user = User.find(params[:id])
     @posts = @user.posts
     @post_new = Post.new
@@ -32,6 +34,7 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
+#ゲストユーザー
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.name == "guestuser"
@@ -39,8 +42,9 @@ class Public::UsersController < ApplicationController
     end
   end
 
+#23から5時まで制限
   def require_access_time
-    if 23 <= Time.current.hour || Time.current.hour <= 5
+    if 21 <= Time.current.hour || Time.current.hour <= 5
       redirect_to times_path
     end
   end
