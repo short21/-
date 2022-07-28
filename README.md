@@ -25,6 +25,9 @@
 
 ## 設計書
 
+- ER図:https://drive.google.com/file/d/1g_y1tVTf0eEvJtWIVSqP3fFygJ13JF21/view?usp=sharing
+- テーブル提議書:https://docs.google.com/spreadsheets/d/1igP1f1qjoXOn2euFDMmOftZ0as_uDzMLfZ8EJ0-VHDQ/edit?usp=sharing
+
 ## 開発環境
 
 - OS：Linux(CentOS)
