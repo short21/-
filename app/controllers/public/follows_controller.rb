@@ -14,11 +14,13 @@ class Public::FollowsController < ApplicationController
   end
 
   def followings
+    @page = Post.all.page(params[:page]).per(10)
     user = User.find(params[:user_id])
     @users = user.followings
   end
 
   def followers
+    @page = Post.all.page(params[:page]).per(10)
     user = User.find(params[:user_id])
     @users = user.followers
   end

@@ -6,6 +6,7 @@ devise_for :users,skip: [:passwords], controllers: {
   registrations: "public/registrations",
   sessions: 'public/sessions'
 }
+#ゲストユーザー
 devise_scope :user do
   post 'users_guest_sign_in', to: 'public/sessions#guest_sign_in'
 end
@@ -46,7 +47,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   namespace :admin do
     resources :users, only: [:index, :show, :edit, :destroy, :update]
     resources :posts, only: [:new, :create, :index, :show, :destroy] do
-      resources :post_comments, only: [:create]
+      resources :post_comments, only: [:create, :destroy]
     end
   end
 end
