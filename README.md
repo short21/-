@@ -37,4 +37,9 @@
 - IDE：Cloud9
 
 ## 使用素材
-使用検討中です
+- 名称:ふくろう
+- 制作者:588ku
+- 配布サイト:https://ja.pngtree.com/freepng/
+
+- 名称: エイリアン,ブロビー氏,
+- 配付サイト:https://icons8.jp/
