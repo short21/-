@@ -6,6 +6,7 @@
         <div class="card chat-app">
             <div id="plist" class="people-list">
                 <ul class="list-unstyled chat-list mt-2 mb-0">
+                  <% @chats.each do |chat| %>
                     <%= link_to chat_path(@user.id,@room.id), class: 'text-dark' do %>
                       <li class="clearfix">
                           <img>
@@ -15,6 +16,7 @@
                           </div>
                       </li>
                     <% end %>
+                  <% end %>
                 </ul>
             </div>
             <div class="chat">
