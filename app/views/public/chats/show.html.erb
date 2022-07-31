@@ -6,17 +6,15 @@
         <div class="card chat-app">
             <div id="plist" class="people-list">
                 <ul class="list-unstyled chat-list mt-2 mb-0">
-                  <% @chats.each do |chat| %>
-                    <%= link_to chat_path(chat.user.id), class: 'text-dark' do %>
+                    <%= link_to chat_path(@user.id,@room.id), class: 'text-dark' do %>
                       <li class="clearfix">
                           <img>
-                            <%= image_tag chat.user.get_profile_image(50,50) %>
+                            <%= image_tag @user.get_profile_image(50,50) %>
                           <div class="about">
-                              <div class="name mt-2 ml-2"><%= chat.user.name %></div>
+                              <div class="name mt-2 ml-2"><%= @user.name %></div>
                           </div>
                       </li>
                     <% end %>
-                  <% end %>
                 </ul>
             </div>
             <div class="chat">
@@ -44,7 +42,7 @@
                               <div class="message-data text-right">
                                   <span class="message-data-time"><%= chat.created_at.strftime('%Y/%m/%d/%H:%M') %></span>
                                   <img>
-                                  <%= image_tag @user.get_profile_image(50,50) %>
+                                  <%= image_tag current_user.get_profile_image(50,50) %>
                               </div>
                               <div class="message other-message float-right"><%= chat.message %></div>
                           </li>

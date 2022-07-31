@@ -48,8 +48,10 @@
             <%= link_to "#{@post.post_comments.count} コメント", post_path(@post.id), class: "text-dark" %>
           </li>
           <li class="nav-item h6 ml-3">
+            <% if @post.user == current_user %>
             <i class="fas fa-trash-alt"></i>
               <%= link_to '消す', @post, method: :delete, data: { confirm: '本当に消しますか？' }, class: "text-dark destroy_book_#{@post.id}"%>
+            <% end %>
           </li>
         </ul>
         <ul class="text-center">
