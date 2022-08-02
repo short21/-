@@ -37,12 +37,12 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:body,:image,:string)
+    params.require(:post).permit(:body,:image)
   end
 
   def require_access_time
-    if 21 <= Time.current.hour || Time.current.hour <= 5
-      redirect_to times_path
+    if 23 <= Time.current.hour || Time.current.hour <= 5
+      #redirect_to times_path
     end
   end
 end
