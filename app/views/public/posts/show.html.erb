@@ -57,7 +57,7 @@
         <ul class="text-center">
           <%= form_with model: [@post, @post_comment] do |f| %>
             <%= f.text_area :comment,:size=>"80x5",rows: '5', placeholder: "友だちのつぶやきにコメントしてみよう！" %>
-            <ul class="mt-5 h4" style="list-style: none;"><h5 class="mb-3">コメントチェック</h5>
+          <ul class="mt-5 h4" style="list-style: none;"><h5 class="mb-3">コメントチェック</h5>
             <li>
               <%= check_box_tag :post %><%= label_tag :post, "あい手をきずつける言ばをつかっていない" ,class: " h5 ml-3" %>
             </li>

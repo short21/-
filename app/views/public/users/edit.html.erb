@@ -15,6 +15,17 @@
         <%= f.label :自己紹介 %>
         <%= f.text_area :introduction , size: "40x15",class: "form-control introduction" %>
       </div>
+      <ul class="mt-5 h4" style="list-style: none;"><h5 class="mb-3">プロフィールチェック</h5>
+            <li>
+              <%= check_box_tag :post %><%= label_tag :post, "だれかがいやな気もちになる名前ではない" ,class: " h5 ml-3" %>
+            </li>
+            <li>
+              <%= check_box_tag :post %><%= label_tag :post, "自分の名前などが分かることを書いていない" ,class: " h5 ml-3" %>
+            </li>
+            <li>
+              <%= check_box_tag :post %><%= label_tag :post, "顔がはっきり分かる写しんをつかっていない" ,class: " h5 ml-3" %>
+            </li>
+　        </ul>
       <div class="form-group">
         <%= f.submit 'へんしゅう ', class: 'btn btn-secondary' %>
       </div>
