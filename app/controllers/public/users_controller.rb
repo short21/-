@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
   #時間制限の設定
-  before_action :require_access_time
+  #before_action :require_access_time
 
   def show
     @page = Post.all.page(params[:page]).per(10)

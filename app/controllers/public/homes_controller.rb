@@ -1,5 +1,5 @@
 class Public::HomesController < ApplicationController
-  before_action :require_access_time
+  #before_action :require_access_time
   def top
   end
 
