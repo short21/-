@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
 
   def show
     @page = Post.all.page(params[:page]).per(10)
-    @user =  @user = User.find(params[:id])
+    @user = User.find(params[:id])
     @posts = @user.posts.order(created_at: :desc)
     @post_new = Post.new
   end

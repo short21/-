@@ -61,3 +61,4 @@ group :production do
   gem 'mysql2'
 end
 gem 'kaminari'
+gem 'jquery-rails'

@@ -7,7 +7,7 @@ class Public::PostsController < ApplicationController
   def index
     @page = Post.all.page(params[:page]).per(10)
     @post_new = Post.new
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.order(created_at: :desc).page(params[:page]).per(10)
     @post_comment = PostComment.new
   end
 
@@ -23,8 +23,7 @@ class Public::PostsController < ApplicationController
     if @post_new.save
       redirect_to post_path(@post_new), notice: "You have created book successfully."
     else
-      @posts = Post.all
-      render 'index'
+      render 'new'
     end
   end
 
