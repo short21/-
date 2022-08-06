@@ -1,5 +1,5 @@
 class Public::PostsController < ApplicationController
-  #before_action :require_access_time
+  before_action :require_access_time
   def new
     @post_new = Post.new
   end

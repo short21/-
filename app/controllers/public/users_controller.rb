@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
   #時間制限の設定
-  #before_action :require_access_time
+  before_action :require_access_time
 
   def show
     @page = Post.all.page(params[:page]).per(10)
@@ -23,7 +23,7 @@ class Public::UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to user_path(current_user.id), notice: "You have updated user successfully."
     else
-      render "users/edit"
+      render "edit"
     end
   end
 
